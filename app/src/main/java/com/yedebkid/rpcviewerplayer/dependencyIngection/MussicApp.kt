@@ -6,9 +6,8 @@ class MussicApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        musicComponent = DaggerMusicComponent.builder()
-//            .applicationMoudule(ApplicationModule(this))
-//            .build()
+        musicComponent = DaggerMusicComponent.builder().applicationModule(ApplicationModule(this))
+            .build()
     }
     companion object{
         lateinit var musicComponent: MusicComponent

@@ -19,9 +19,9 @@ interface MusicApi {
   @GET(PATH_SEARCH)
 
   suspend fun getMusicsByGenre(
-    @Query("term") genre: String? = "pop",
-    @Query("amp;media") media: String? = "music",
-    @Query("amp;entity") entity: String? = "song",
+    @Query("term") genre: String? = null,
+    @Query("amp;media") media: String? = null,
+    @Query("amp;entity") entity: String? = null,
     @Query("amp;limit") limit: Int? = 50
     ): Response<MusicData>
 

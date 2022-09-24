@@ -48,10 +48,12 @@ class NetworkModule {
             .build()
 
     @Provides
-    fun providesRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
+    fun providesRetrofit(
+        okHttpClient: OkHttpClient,
+        gson: Gson): Retrofit =
         Retrofit.Builder()
             .baseUrl(MusicApi.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
 

@@ -1,5 +1,6 @@
 package com.yedebkid.rpcviewerplayer.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private const val TAG = "MusicViewModel"
 class MusicViewModel(
     private val repository: MusicRepo
 ): ViewModel() {
@@ -32,7 +34,7 @@ class MusicViewModel(
 
     fun getPopMusicByGenre(genreType: GenreType){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getMusicByGenre(genreType).collect() {
+            repository.getMusicByGenre(genreType).collect {
                 withContext(Dispatchers.Main) {
                     _pop.postValue(it)
                 }
@@ -41,7 +43,7 @@ class MusicViewModel(
     }
     fun getRockMusicByGenre(genreType: GenreType){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getMusicByGenre(genreType).collect() {
+            repository.getMusicByGenre(genreType).collect {
                 withContext(Dispatchers.Main) {
                     _rock.postValue(it)
                 }
@@ -50,7 +52,7 @@ class MusicViewModel(
     }
     fun getClassicMusicByGenre(genreType: GenreType){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getMusicByGenre(genreType).collect() {
+            repository.getMusicByGenre(genreType).collect {
                 withContext(Dispatchers.Main) {
                     _classic.postValue(it)
                 }
@@ -60,6 +62,7 @@ class MusicViewModel(
 
     override fun onCleared() {
         super.onCleared()
+        Log.d(TAG, "onCleared: ViewModel clreared.")
     }
 
 }

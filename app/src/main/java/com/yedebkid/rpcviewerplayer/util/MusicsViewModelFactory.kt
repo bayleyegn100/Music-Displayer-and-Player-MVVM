@@ -2,24 +2,23 @@ package com.yedebkid.rpcviewerplayer.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.yedebkid.rpcviewerplayer.dependencyIngection.ViewModelModule
+
 import com.yedebkid.rpcviewerplayer.rest.MusicRepo
 import com.yedebkid.rpcviewerplayer.viewModel.MusicViewModel
-import javax.inject.Inject
 
-//class MusicsViewModelFactory @Inject constructor(
-////    private val repo: MusicRepo
-//) : ViewModelProvider.Factory{
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        return MusicViewModel(repo) as T
-//    }
-//    }
-//}
-
-class MusicsViewModelFactory (private val repo: MusicRepo) : ViewModelProvider.Factory{
+class MusicsViewModelFactory(
+    private val repository: MusicRepo
+): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MusicViewModel(repo) as T
+        return MusicViewModel(repository) as T
     }
 
-
 }
+
+//class MusicsViewModelFactory(
+//    private val owner: SavedStateRegistryOwner,
+//    private val repository: MusicRepo
+//    ) : AbstractSavedStateViewModelFactory(owner, null), ViewModelProvider.Factory {
+//    override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, state: SavedStateHandle) =
+//        MusicViewModel(repository) as T
+//}

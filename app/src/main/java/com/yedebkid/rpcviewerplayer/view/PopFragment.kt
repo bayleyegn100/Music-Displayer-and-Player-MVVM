@@ -30,12 +30,12 @@ class PopFragment : Fragment() {
     }
 
     @Inject
-    lateinit var  musicRepo: MusicRepo
+    lateinit var  musicsViewModelFactory: MusicsViewModelFactory
 
     private val musicsViewModel: MusicViewModel by lazy {
         ViewModelProvider(
             requireActivity(),
-            MusicsViewModelFactory(musicRepo)
+            musicsViewModelFactory
         )[MusicViewModel::class.java]
     }
 

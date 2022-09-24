@@ -3,10 +3,9 @@ package com.yedebkid.rpcviewerplayer.model.domain
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yedebkid.rpcviewerplayer.model.MusicData
+
 import com.yedebkid.rpcviewerplayer.model.Songs
-import io.reactivex.Single
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "musics")

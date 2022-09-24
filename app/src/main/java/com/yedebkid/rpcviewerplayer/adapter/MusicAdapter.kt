@@ -14,9 +14,9 @@ class MusicAdapter(
     private val musicDataset: MutableList<SongDomainData> = mutableListOf()
 ) : RecyclerView.Adapter<MusicViewHolder>() {
 
-    fun updateSongs(newSong: List<SongDomainData?>?){
+    fun updateSongs(newSong: List<SongDomainData>?){
         musicDataset.clear()
-        musicDataset.addAll(newSong.sortedBy { it. artistName})
+        musicDataset.addAll(newSong!!.sortedBy { it. artistName})
         notifyDataSetChanged()
 }
 
