@@ -9,17 +9,23 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yedebkid.rpcviewerplayer.adapter.MusicAdapter
 import com.yedebkid.rpcviewerplayer.databinding.FragmentPopBinding
 import com.yedebkid.rpcviewerplayer.dependencyIngection.MussicApp
+import com.yedebkid.rpcviewerplayer.model.domain.SongDomainData
 import com.yedebkid.rpcviewerplayer.rest.MusicRepo
 import com.yedebkid.rpcviewerplayer.util.GenreType
 import com.yedebkid.rpcviewerplayer.util.MusicsViewModelFactory
 import com.yedebkid.rpcviewerplayer.util.UIState
 import com.yedebkid.rpcviewerplayer.viewModel.MusicViewModel
+import java.util.*
 import javax.inject.Inject
 
 class PopFragment : Fragment() {
+
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var songList: List<SongDomainData>
 
     private val binding by lazy {
         FragmentPopBinding.inflate(layoutInflater)
@@ -38,6 +44,8 @@ class PopFragment : Fragment() {
             musicsViewModelFactory
         )[MusicViewModel::class.java]
     }
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -85,6 +93,12 @@ class PopFragment : Fragment() {
                 }
 
             }
+        }
+        swipeRefreshLayout = binding.popContainer
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            Collections.shuffle(songList, Random(System.currentTimeMillis()))
+            musicAdapter.notifyDataSetChanged()
         }
 
         musicsViewModel.getPopMusicByGenre(GenreType.GENRE_POP)

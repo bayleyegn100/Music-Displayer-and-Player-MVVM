@@ -9,17 +9,23 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yedebkid.rpcviewerplayer.adapter.MusicAdapter
 import com.yedebkid.rpcviewerplayer.databinding.FragmentRockBinding
 import com.yedebkid.rpcviewerplayer.dependencyIngection.MussicApp
+import com.yedebkid.rpcviewerplayer.model.domain.SongDomainData
 import com.yedebkid.rpcviewerplayer.rest.MusicRepo
 import com.yedebkid.rpcviewerplayer.util.GenreType
 import com.yedebkid.rpcviewerplayer.util.MusicsViewModelFactory
 import com.yedebkid.rpcviewerplayer.util.UIState
 import com.yedebkid.rpcviewerplayer.viewModel.MusicViewModel
+import java.util.*
 import javax.inject.Inject
 
 class RockFragment : Fragment() {
+
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var songList: List<SongDomainData>
 
     private val binding by lazy {
         FragmentRockBinding.inflate(layoutInflater)
@@ -85,6 +91,13 @@ class RockFragment : Fragment() {
                 }
 
             }
+        }
+
+        swipeRefreshLayout = binding.rockContainer
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            Collections.shuffle(songList, Random(System.currentTimeMillis()))
+            musicAdapter.notifyDataSetChanged()
         }
 
         musicsViewModel.getRockMusicByGenre(GenreType.GENRE_ROCK)

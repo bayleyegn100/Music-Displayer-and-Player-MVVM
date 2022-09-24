@@ -9,17 +9,23 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yedebkid.rpcviewerplayer.adapter.MusicAdapter
 import com.yedebkid.rpcviewerplayer.databinding.FragmentClassicBinding
 import com.yedebkid.rpcviewerplayer.dependencyIngection.MussicApp
+import com.yedebkid.rpcviewerplayer.model.domain.SongDomainData
 import com.yedebkid.rpcviewerplayer.rest.MusicRepo
 import com.yedebkid.rpcviewerplayer.util.GenreType
 import com.yedebkid.rpcviewerplayer.util.MusicsViewModelFactory
 import com.yedebkid.rpcviewerplayer.util.UIState
 import com.yedebkid.rpcviewerplayer.viewModel.MusicViewModel
+import java.util.*
 import javax.inject.Inject
 
 class ClassicFragment : Fragment() {
+
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var songList: List<SongDomainData>
 
     private val binding by lazy {
         FragmentClassicBinding.inflate(layoutInflater)
@@ -85,6 +91,13 @@ class ClassicFragment : Fragment() {
                 }
 
             }
+        }
+
+        swipeRefreshLayout = binding.container
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+            Collections.shuffle(songList, Random(System.currentTimeMillis()))
+            musicAdapter.notifyDataSetChanged()
         }
 
         musicsViewModel.getClassicMusicByGenre(GenreType.GENRE_CLASSIC)
